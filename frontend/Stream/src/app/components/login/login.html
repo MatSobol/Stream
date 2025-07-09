@@ -1,0 +1,58 @@
+<div class="container">
+  <mat-card appearance="outlined">
+    <mat-card-header class="card-header">
+      <mat-card-title>Login</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input
+            id="email"
+            formControlName="email"
+            matInput
+            autocomplete="email"
+          />
+          <mat-icon matSuffix>email</mat-icon>
+          @if (loginForm.get('email')?.invalid &&
+          loginForm.get('email')?.touched){
+          <mat-error>Incorrect email</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Password</mat-label>
+          <input
+            matInput
+            formControlName="password"
+            [type]="hide() ? 'password' : 'text'"
+            autocomplete="current-password"
+          />
+          <button
+            type="button"
+            matIconButton
+            matSuffix
+            (click)="clickEvent($event)"
+            [attr.aria-label]="'Hide password'"
+            [attr.aria-pressed]="hide()"
+          >
+            <mat-icon>{{ hide() ? "visibility_off" : "visibility" }}</mat-icon>
+          </button>
+          @if(loginForm.get('password')?.invalid) {
+          <mat-error>Incorrect password</mat-error>
+          }
+        </mat-form-field>
+
+        <strong class="extra-options">Forgot password?</strong>
+
+        <button type="submit" matButton="filled" [disabled]="loginForm.invalid">
+          Login
+        </button>
+      </form>
+      <mat-card-footer class="card-fotter">
+        Don't have an account?
+        <strong routerLink="/register">Register</strong>
+      </mat-card-footer>
+    </mat-card-content>
+  </mat-card>
+</div>
