@@ -1,5 +1,6 @@
 package org.auth.Service;
 
+import org.auth.Constants;
 import org.auth.Dto.RegisterRequestDTO;
 import org.auth.Model.User;
 import org.auth.Repository.UserRepository;
@@ -7,10 +8,7 @@ import org.auth.Util.Converter.Converter;
 import org.auth.Util.Converter.RegisterRequestDTOConverter;
 import org.auth.Util.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseCookie;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -32,16 +30,16 @@ public class RegisterService {
 
     private ResponseEntity<String> isUserValid(RegisterRequestDTO request) {
         if (request.getPassword().length() < 6) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Password must be longer than 5 characters");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).contentType(MediaType.TEXT_PLAIN).body("Password must be longer than 5 characters");
         }
         if (!request.getPassword().equals(request.getRepeatPassword())) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Passwords don't match");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).contentType(MediaType.TEXT_PLAIN).body("Passwords don't match");
         }
         if (!EmailValidator.validate(request.getEmail())) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Incorrect email");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).contentType(MediaType.TEXT_PLAIN).body("Incorrect email");
         }
         if (userRepository.existsByEmail(request.getEmail())) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email already taken");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).contentType(MediaType.TEXT_PLAIN).body("Email already taken");
         }
         return null;
     }
@@ -54,12 +52,7 @@ public class RegisterService {
         String password = passwordEncoder.encode(request.getPassword());
         request.setPassword(password);
         User user = userRepository.save(registerRequestDTOConverter.convert(request));
-        long time = 7L * 24 * 60 * 60;
-        ResponseCookie cookie = ResponseCookie.from("auth", jwtService.create(time, user.getId()))
-                .httpOnly(false)
-                .path("/")
-                .maxAge(time)
-                .build();
-        return ResponseEntity.status(HttpStatus.OK).header(HttpHeaders.SET_COOKIE, cookie.toString()).body("Successfully registered");
+        ResponseCookie cookie = ResponseCookie.from("auth", jwtService.create(Constants.JWT_MAX_AGE, user.getId())).httpOnly(false).path("/").maxAge(Constants.JWT_MAX_AGE).build();
+        return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.TEXT_PLAIN).header(HttpHeaders.SET_COOKIE, cookie.toString()).body("Successfully registered");
     }
 }

@@ -1,6 +1,9 @@
 spring:
   application:
     name: catering-backend
+  mvc:
+    servlet:
+      path: /auth
   security:
     jwt:
       secret-key: ${JWT_TOKEN:79da7f18-2a0b-45d3-9cd1-ae10a47694aa}
