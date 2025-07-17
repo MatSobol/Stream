@@ -60,7 +60,9 @@
       </form>
       <mat-card-footer class="card-fotter">
         Have an account?
-        <strong routerLink="/login">Login</strong>
+        <strong [routerLink]="'/login'" [queryParamsHandling]="'preserve'"
+          >Login</strong
+        >
       </mat-card-footer>
     </mat-card-content>
   </mat-card>

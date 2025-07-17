@@ -22,10 +22,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
-import { AppSettings } from '../app.settings';
+import { AppSettings } from '../../app.settings';
 import { HttpClient } from '@angular/common/http';
+import { AuthService } from '../../services/auth-service';
 
 @Component({
   selector: 'app-register',
@@ -54,7 +55,13 @@ export class Register {
     this.hide.set(!this.hide());
   }
 
-  constructor(private fb: FormBuilder, private toastr: ToastrService) {
+  constructor(
+    private fb: FormBuilder,
+    private toastr: ToastrService,
+    private auth: AuthService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {
     this.registerForm = this.fb.group(
       {
         username: ['', [Validators.required]],
@@ -93,7 +100,12 @@ export class Register {
         )
         .subscribe({
           next: (response) => {
-            this.toastr.success(response);
+            this.auth.authenticate(
+              response,
+              this.toastr,
+              this.route,
+              this.router
+            );
           },
           error: (error) => {
             this.toastr.error(error.error);

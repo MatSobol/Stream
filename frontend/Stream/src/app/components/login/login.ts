@@ -19,10 +19,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 import { AppSettings } from '../../app.settings';
 import { HttpClient } from '@angular/common/http';
+import { AuthService } from '../../services/auth-service';
 
 @Component({
   selector: 'app-login',
@@ -52,7 +53,13 @@ export class Login {
     event.stopPropagation();
   }
 
-  constructor(private fb: FormBuilder, private toastr: ToastrService) {
+  constructor(
+    private fb: FormBuilder,
+    private toastr: ToastrService,
+    private auth: AuthService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
@@ -70,7 +77,12 @@ export class Login {
         )
         .subscribe({
           next: (response) => {
-            this.toastr.success(response);
+            this.auth.authenticate(
+              response,
+              this.toastr,
+              this.route,
+              this.router
+            );
           },
           error: (error) => {
             this.toastr.error(error.error);

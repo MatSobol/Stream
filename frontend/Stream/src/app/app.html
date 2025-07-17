@@ -1,1 +1,18 @@
+<mat-toolbar class="navbar">
+  <button matIconButton [matMenuTriggerFor]="menu">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span>Stream</span>
+  <span class="spacer"></span>
+  @if(isAuthenticated$ | async){
+  <button matButton="outlined" (click)="logout()">Logout</button>
+  } @else {
+  <button matButton="outlined" routerLink="/login">Login</button>
+  }
+</mat-toolbar>
+<mat-menu #menu="matMenu">
+  <button mat-menu-item routerLink="/">Home</button>
+  <button mat-menu-item routerLink="/images">Images</button>
+  <button mat-menu-item routerLink="/profile">Profile</button>
+</mat-menu>
 <router-outlet />

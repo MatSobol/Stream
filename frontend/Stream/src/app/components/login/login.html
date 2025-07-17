@@ -51,7 +51,9 @@
       </form>
       <mat-card-footer class="card-fotter">
         Don't have an account?
-        <strong routerLink="/register">Register</strong>
+        <strong [routerLink]="'/register'" [queryParamsHandling]="'preserve'"
+          >Register</strong
+        >
       </mat-card-footer>
     </mat-card-content>
   </mat-card>
