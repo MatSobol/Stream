@@ -1,13 +1,20 @@
-import { Injectable, Inject, PLATFORM_ID, REQUEST } from '@angular/core';
+import {
+  Injectable,
+  Inject,
+  PLATFORM_ID,
+  computed,
+  effect,
+  signal,
+} from '@angular/core';
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
-import { BehaviorSubject } from 'rxjs';
+import { REQUEST } from '@angular/core';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private _isAuthenticated = new BehaviorSubject<boolean>(false);
-  isAuthenticated$ = this._isAuthenticated.asObservable();
+  private _isAuthenticated = signal<boolean>(false);
+  readonly isAuthenticated = this._isAuthenticated;
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
@@ -19,12 +26,12 @@ export class AuthService {
   private init() {
     if (isPlatformServer(this.platformId)) {
       const cookie = this.request?.headers?.get('cookie') || '';
-      this._isAuthenticated.next(cookie.includes('Authorization'));
+      this._isAuthenticated.set(cookie.includes('Authorization'));
     }
 
     if (isPlatformBrowser(this.platformId)) {
       const cookie = document.cookie || '';
-      this._isAuthenticated.next(cookie.includes('Authorization'));
+      this._isAuthenticated.set(cookie.includes('Authorization'));
     }
   }
 
@@ -32,15 +39,15 @@ export class AuthService {
     toastr.success(response);
     const redirectUrl = route.snapshot.queryParamMap.get('redirect') || '/';
     router.navigateByUrl(redirectUrl);
-    this._isAuthenticated.next(true);
+    this._isAuthenticated.set(true);
   }
 
-  isAuthenticated() {
-    return this._isAuthenticated.value;
+  isAuthenticatedValue(): boolean {
+    return this._isAuthenticated();
   }
 
   logout() {
     document.cookie = 'Authorization=; Path=/; Max-Age=0';
-    this._isAuthenticated.next(false);
+    this._isAuthenticated.set(false);
   }
 }

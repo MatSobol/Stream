@@ -4,7 +4,7 @@
   </button>
   <span>Stream</span>
   <span class="spacer"></span>
-  @if(isAuthenticated$ | async){
+  @if(isAuthenticated()){
   <button matButton="outlined" (click)="logout()">Logout</button>
   } @else {
   <button matButton="outlined" routerLink="/login">Login</button>

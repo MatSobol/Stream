@@ -1,4 +1,4 @@
-import { Component, inject, REQUEST } from '@angular/core';
+import { Component, inject, REQUEST, WritableSignal } from '@angular/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -24,10 +24,10 @@ import { CommonModule } from '@angular/common';
   styleUrl: './app.sass',
 })
 export class App {
-  isAuthenticated$: Observable<boolean>;
+  isAuthenticated: WritableSignal<boolean>;
 
   constructor(private authService: AuthService) {
-    this.isAuthenticated$ = this.authService.isAuthenticated$;
+    this.isAuthenticated = this.authService.isAuthenticated;
   }
 
   logout() {
