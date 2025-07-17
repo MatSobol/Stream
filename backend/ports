@@ -1,4 +1,7 @@
 frontend {
+    4200
+}
+swagger {
     auth: 8080
     user: 8081
 }
