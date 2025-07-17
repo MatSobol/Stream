@@ -5,6 +5,7 @@ import {
   computed,
   effect,
   signal,
+  inject,
 } from '@angular/core';
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 import { REQUEST } from '@angular/core';
@@ -13,25 +14,25 @@ import { REQUEST } from '@angular/core';
   providedIn: 'root',
 })
 export class AuthService {
-  private _isAuthenticated = signal<boolean>(false);
+  private platformId = inject(PLATFORM_ID);
+  private request = inject(REQUEST);
+  private _isAuthenticated = signal<boolean>(this.init());
   readonly isAuthenticated = this._isAuthenticated;
 
-  constructor(
-    @Inject(PLATFORM_ID) private platformId: Object,
-    @Inject(REQUEST) private request: Request
-  ) {
-    this.init();
-  }
+  constructor() {}
 
   private init() {
+    let cookie;
     if (isPlatformServer(this.platformId)) {
-      const cookie = this.request?.headers?.get('cookie') || '';
-      this._isAuthenticated.set(cookie.includes('Authorization'));
+      cookie = this.request?.headers?.get('cookie') || '';
     }
-
     if (isPlatformBrowser(this.platformId)) {
-      const cookie = document.cookie || '';
-      this._isAuthenticated.set(cookie.includes('Authorization'));
+      cookie = document.cookie || '';
+    }
+    if (cookie) {
+      return cookie.includes('Authorization');
+    } else {
+      return false;
     }
   }
 
