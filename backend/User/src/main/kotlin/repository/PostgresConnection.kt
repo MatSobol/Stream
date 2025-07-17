@@ -5,7 +5,7 @@ import io.ktor.server.application.log
 import java.sql.Connection
 import java.sql.DriverManager
 
-class PostgressConnection : Conn {
+class PostgresConnection : Conn {
     override fun connect(app: Application): Connection {
         Class.forName("org.postgresql.Driver")
 

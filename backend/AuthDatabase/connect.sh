@@ -1,2 +1,2 @@
-docker exec -it postgres psql -U postgres -d auth
+docker exec -it auth-database psql -U postgres -d auth
 

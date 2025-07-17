@@ -25,6 +25,6 @@ import org.koin.logger.slf4jLogger
 
 fun Application.configureHTTP() {
     routing {
-        swaggerUI(path = "openapi")
+        swaggerUI(path = "users/docs")
     }
 }

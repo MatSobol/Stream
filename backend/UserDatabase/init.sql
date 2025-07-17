@@ -4,7 +4,7 @@ CREATE TABLE users (
     username VARCHAR(20) NOT NULL,
     email VARCHAR(40) UNIQUE NOT NULL,
     icon VARCHAR(100),
-    description VARCHAR(300),
+    description VARCHAR(300)
 );
 
 

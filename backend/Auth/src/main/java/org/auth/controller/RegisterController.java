@@ -1,8 +1,8 @@
-package org.auth.Controller;
+package org.auth.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import org.auth.Dto.RegisterRequestDTO;
-import org.auth.Service.RegisterService;
+import org.auth.dto.RegisterRequestDTO;
+import org.auth.service.RegisterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

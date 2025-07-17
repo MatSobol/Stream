@@ -8,5 +8,5 @@ data class User(
     val username: String,
     val email: String,
     val icon: String? = null,
-    val description: String? = null
+    val description: String
 )
