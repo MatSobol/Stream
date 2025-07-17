@@ -52,7 +52,7 @@ public class RegisterService {
         String password = passwordEncoder.encode(request.getPassword());
         request.setPassword(password);
         User user = userRepository.save(registerRequestDTOConverter.convert(request));
-        ResponseCookie cookie = ResponseCookie.from("auth", jwtService.create(Constants.JWT_MAX_AGE, user.getId())).httpOnly(false).path("/").maxAge(Constants.JWT_MAX_AGE).build();
+        ResponseCookie cookie = ResponseCookie.from("Authorization", jwtService.create(Constants.JWT_MAX_AGE, user.getId())).httpOnly(false).path("/").maxAge(Constants.JWT_MAX_AGE).build();
         return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.TEXT_PLAIN).header(HttpHeaders.SET_COOKIE, cookie.toString()).body("Successfully registered");
     }
 }

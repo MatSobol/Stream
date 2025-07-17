@@ -22,7 +22,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { RouterLink } from '@angular/router';
 
 import { AppSettings } from '../../app.settings';
-import { HttpService } from '../../services/http';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -43,7 +43,7 @@ import { HttpService } from '../../services/http';
 })
 export class Login {
   loginForm: FormGroup;
-  private http = inject(HttpService);
+  private http = inject(HttpClient);
 
   hide = signal(true);
 
@@ -56,21 +56,26 @@ export class Login {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
-      remember: [false],
     });
   }
 
   onSubmit() {
     if (this.loginForm.valid) {
-      const { email, password, remember } = this.loginForm.value;
-      this.http.post(AppSettings.LOGIN_URL, { email, password }).subscribe({
-        next: (response) => {
-          this.toastr.success(response);
-        },
-        error: (error) => {
-          this.toastr.error(error.error);
-        },
-      });
+      const { email, password } = this.loginForm.value;
+      this.http
+        .post(
+          AppSettings.LOGIN_URL,
+          { email, password },
+          { withCredentials: true, responseType: 'text' }
+        )
+        .subscribe({
+          next: (response) => {
+            this.toastr.success(response);
+          },
+          error: (error) => {
+            this.toastr.error(error.error);
+          },
+        });
     }
   }
 }

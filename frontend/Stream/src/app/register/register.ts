@@ -24,8 +24,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { RouterLink } from '@angular/router';
 
-import { HttpService } from '../services/http';
 import { AppSettings } from '../app.settings';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-register',
@@ -46,7 +46,7 @@ import { AppSettings } from '../app.settings';
 })
 export class Register {
   registerForm: FormGroup;
-  private http = inject(HttpService);
+  private http = inject(HttpClient);
 
   hide = signal(true);
 
@@ -81,12 +81,16 @@ export class Register {
       const { username, email, password, repeatPassword } =
         this.registerForm.value;
       this.http
-        .post(AppSettings.REGISTER_URL, {
-          username,
-          email,
-          password,
-          repeatPassword,
-        })
+        .post(
+          AppSettings.REGISTER_URL,
+          {
+            username,
+            email,
+            password,
+            repeatPassword,
+          },
+          { withCredentials: true, responseType: 'text' }
+        )
         .subscribe({
           next: (response) => {
             this.toastr.success(response);
