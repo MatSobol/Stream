@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject, REQUEST } from '@angular/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -28,10 +28,6 @@ export class App {
 
   constructor(private authService: AuthService) {
     this.isAuthenticated$ = this.authService.isAuthenticated$;
-  }
-
-  check() {
-    console.log(this.authService.isAuthenticated());
   }
 
   logout() {
