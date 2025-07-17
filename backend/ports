@@ -1,0 +1,9 @@
+frontend {
+    auth: 8080
+    user: 8081
+}
+database {
+    auth: 5432
+    user: 5433
+}
+

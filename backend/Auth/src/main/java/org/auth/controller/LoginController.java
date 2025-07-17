@@ -1,7 +1,7 @@
-package org.auth.Controller;
+package org.auth.controller;
 
-import org.auth.Dto.LoginRequestDTO;
-import org.auth.Service.LoginService;
+import org.auth.dto.LoginRequestDTO;
+import org.auth.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

@@ -4,20 +4,126 @@ info:
   description: "Application API"
   version: "1.0.0"
 servers:
-  - url: "http://0.0.0.0:8080"
+  - url: "http://0.0.0.0:8081"
+
 paths:
   /:
     get:
-      description: "Hello World!"
+      summary: Hello world
       responses:
-        "200":
-          description: "OK"
-          content:
-            text/plain:
-              schema:
-                type: "string"
-              examples:
-                Example#1:
-                  value: "Hello World!"
+        '200':
+          description: Hello world
+
+  /profile/{id}:
+    put:
+      summary: Change profile
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+            format: int64
+          required: true
+          description: "User ID"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Profile-put"
+      responses:
+        '204':
+          description: Profile updated
+
+  /users:
+    get:
+      summary: Get all users
+      parameters:
+        - name: Key
+          in: header
+          required: true
+          description: local key
+          schema:
+            type: string
+            default: "487c0c9f-082c-4236-a522-d1d47b64c6c5"
+      responses:
+        '200':
+          description: A list of users
+
+    post:
+      parameters:
+        - name: Key
+          in: header
+          required: true
+          description: local key
+          schema:
+            type: string
+            default: "487c0c9f-082c-4236-a522-d1d47b64c6c5"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User-post"
+      responses:
+        '201':
+          description: Created
+
+  /users/{id}:
+    get:
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+            format: int64
+          required: true
+          description: "User ID"
+      responses:
+        '200':
+          description: Get user
+
+    delete:
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: "User ID"
+      responses:
+        '200':
+          description: Get user
+
 components:
-  schemas: {}
+  schemas:
+    Profile-put:
+      type: object
+      properties:
+        username:
+          type: string
+          example: "johndoe"
+        email:
+          type: string
+          example: "johndoe@example.com"
+        description:
+          type: string
+          example: "Sample user description"
+    User-post:
+      type: object
+      properties:
+        role:
+          type: string
+          example: "admin"
+        username:
+          type: string
+          example: "johndoe"
+        email:
+          type: string
+          example: "johndoe@example.com"
+        icon:
+          type: string
+          example: "https://example.com/icon.png"
+        description:
+          type: string
+          example: "Sample user description"

@@ -1,4 +1,4 @@
-package org.auth.Config;
+package org.auth.config;
 
 import io.micrometer.common.lang.NonNull;
 import org.auth.Constants;

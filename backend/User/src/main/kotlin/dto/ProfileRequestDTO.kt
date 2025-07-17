@@ -3,7 +3,7 @@ package com.example.dto
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class ProfileRequest(
+data class ProfileRequestDTO(
     val id: Long,
     val username: String,
     val email: String,

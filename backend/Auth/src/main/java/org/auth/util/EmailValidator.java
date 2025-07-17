@@ -1,4 +1,4 @@
-package org.auth.Util;
+package org.auth.util;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

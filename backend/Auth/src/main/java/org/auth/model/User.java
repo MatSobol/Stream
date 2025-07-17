@@ -1,4 +1,4 @@
-package org.auth.Model;
+package org.auth.model;
 
 import jakarta.persistence.*;
 import lombok.Data;

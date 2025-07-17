@@ -1,9 +1,9 @@
-package org.auth.Service;
+package org.auth.service;
 
 import org.auth.Constants;
-import org.auth.Dto.LoginRequestDTO;
-import org.auth.Model.User;
-import org.auth.Repository.UserRepository;
+import org.auth.dto.LoginRequestDTO;
+import org.auth.model.User;
+import org.auth.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.security.crypto.password.PasswordEncoder;

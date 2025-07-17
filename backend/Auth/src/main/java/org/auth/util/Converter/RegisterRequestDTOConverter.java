@@ -1,7 +1,7 @@
-package org.auth.Util.Converter;
+package org.auth.util.Converter;
 
-import org.auth.Model.User;
-import org.auth.Dto.RegisterRequestDTO;
+import org.auth.model.User;
+import org.auth.dto.RegisterRequestDTO;
 
 public class RegisterRequestDTOConverter implements Converter<RegisterRequestDTO, User> {
 

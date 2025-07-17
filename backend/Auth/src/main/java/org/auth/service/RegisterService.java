@@ -1,12 +1,12 @@
-package org.auth.Service;
+package org.auth.service;
 
 import org.auth.Constants;
-import org.auth.Dto.RegisterRequestDTO;
-import org.auth.Model.User;
-import org.auth.Repository.UserRepository;
-import org.auth.Util.Converter.Converter;
-import org.auth.Util.Converter.RegisterRequestDTOConverter;
-import org.auth.Util.EmailValidator;
+import org.auth.dto.RegisterRequestDTO;
+import org.auth.model.User;
+import org.auth.repository.UserRepository;
+import org.auth.util.Converter.Converter;
+import org.auth.util.Converter.RegisterRequestDTOConverter;
+import org.auth.util.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
