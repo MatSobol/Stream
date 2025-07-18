@@ -1,1 +1,12 @@
-<p>images works!</p>
+<div class="container">
+  <div class="image-container">
+    @for (image of images(); track $index) {
+    <mat-card>
+      <img mat-card-image [src]="image" alt="Photo of a Shiba Inu"
+    /></mat-card>
+    }
+  </div>
+  @if(isLoading){
+  <mat-spinner></mat-spinner>
+  }
+</div>
