@@ -41,7 +41,7 @@ app.MapGet("/images", async (int start, int count) =>
     if (start < 0) start = 0;
     if (count < 1) count = 1;
 
-    await Task.Delay(1500);
+    await Task.Delay(0);
 
     string[] elements = new string[count];
     for (int i = 0; i < count; i++)
