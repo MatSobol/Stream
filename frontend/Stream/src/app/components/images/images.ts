@@ -45,7 +45,6 @@ export class Images {
         });
     } else if (isPlatformBrowser(this.platformId)) {
       let imagesString = this.transferState.get<string[]>(IMAGES_KEY, []);
-      console.log(imagesString);
       if (imagesString.length == 0) {
         const params = new HttpParams().set('start', 0).set('count', 20);
         this.isLoading = true;
@@ -55,6 +54,7 @@ export class Images {
             this.isLoading = false;
             this.images.set(result);
           });
+        return;
       }
       this.images.set(imagesString);
     }
