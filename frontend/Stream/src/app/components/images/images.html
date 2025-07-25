@@ -1,9 +1,27 @@
 <div class="container">
   <div class="image-container">
     @for (image of images(); track $index) {
-    <mat-card>
-      <img mat-card-image [src]="image" alt="Photo of a Shiba Inu"
-    /></mat-card>
+    <mat-card (mouseenter)="enter($index)" (mouseleave)="leave()">
+      @if($index !== hoverIndex()){
+      <img
+        class="preview-img"
+        mat-card-image
+        [src]="image.image"
+        alt="Photo of a Shiba Inu"
+      />
+      } @else {
+      <iframe class="video" mat-card-image [src]="getSafeURl(image.previewUrl)">
+      </iframe>
+      }
+      <div class="title-container">
+        <img
+          class="icon-img"
+          mat-card-image
+          [src]="image.icon"
+          alt="Photo of a Shiba Inu"
+        />{{ image.title }}
+      </div>
+    </mat-card>
     }
   </div>
   @if(isLoading){
