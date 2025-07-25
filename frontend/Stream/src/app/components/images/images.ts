@@ -44,15 +44,22 @@ export class Images {
           this.transferState.set(IMAGES_KEY, result);
         });
     } else if (isPlatformBrowser(this.platformId)) {
-      this.images.set(this.transferState.get<string[]>(IMAGES_KEY, []));
+      let imagesString = this.transferState.get<string[]>(IMAGES_KEY, []);
+      console.log(imagesString);
+      if (imagesString.length == 0) {
+        const params = new HttpParams().set('start', 0).set('count', 20);
+        this.isLoading = true;
+        this.http
+          .get<string[]>(AppSettings.IMAGES_URL, { params })
+          .subscribe((result) => {
+            this.isLoading = false;
+            this.images.set(result);
+          });
+      }
+      this.images.set(imagesString);
     }
   }
 
-  private atBottom(event: any) {
-    const tracker = event.target;
-    const limit = tracker.scrollHeight - tracker.clientHeight;
-    return event.target.scrollTop === limit;
-  }
   @HostListener('window:scroll', [])
   scroll(): void {
     if (

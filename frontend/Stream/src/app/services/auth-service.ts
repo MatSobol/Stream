@@ -16,7 +16,8 @@ import { REQUEST } from '@angular/core';
 export class AuthService {
   private platformId = inject(PLATFORM_ID);
   private request = inject(REQUEST);
-  private _isAuthenticated = signal<boolean>(this.init());
+  // private _isAuthenticated = signal<boolean>(this.init());
+  private _isAuthenticated = signal<boolean>(true);
   readonly isAuthenticated = this._isAuthenticated;
 
   constructor() {}
