@@ -1,0 +1,9 @@
+.service-list {
+  padding-top: 22px;
+  width: clamp(300px, 40vw, 100vw);
+}
+
+.service-list-skeleton-container {
+  height: 100vh;
+  overflow-y: hidden;
+}
