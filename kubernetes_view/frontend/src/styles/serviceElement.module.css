@@ -1,0 +1,31 @@
+.updating {
+  animation: spin 3s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.service-status {
+  border-radius: 100%;
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+}
+
+.service-status.active {
+  background-color: var(--mantine-color-green-filled);
+}
+
+.service-status.preparing {
+  background-color: var(--mantine-color-yellow-filled);
+}
+
+.service-status.down {
+  background-color: var(--mantine-color-red-filled);
+}

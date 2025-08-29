@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auth
+  template:
+    metadata:
+      labels:
+        app: auth
+    spec:
+      initContainers:
+        - name: wait-for-database
+          image: busybox
+          command: ['sh', '-c', 'until nc -z postgres 5432; do echo waiting for postgres; sleep 2; done;']
+      containers:
+        - name: auth
+          image: "auth"
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: auth-config
+          env:
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: POSTGRES_PASSWORD
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: auth-secret
+                  key: JWT_SECRET

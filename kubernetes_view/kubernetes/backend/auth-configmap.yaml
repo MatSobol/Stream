@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: auth-config
+  labels:
+    app: auth
+data:
+  SECURITY_USERNAME: admin
+  SECURITY_PASSWORD: password
+  POSTGRES_URL: jdbc:postgresql://postgres:5432/auth
